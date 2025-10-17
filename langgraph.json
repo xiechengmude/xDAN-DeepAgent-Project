@@ -1,0 +1,14 @@
+{
+  "dependencies": [
+    "."
+  ],
+  "graphs": {
+    "deep_agent": "./src/deepagents/factory.py:deep_agent_factory",
+    "async_deep_agent": "./src/deepagents/factory.py:async_deep_agent_factory"
+  },
+  "env": ".env",
+  "python_version": "3.11",
+  "store": {
+    "type": "memory"
+  }
+}
