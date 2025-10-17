@@ -46,7 +46,7 @@ async def deep_agent_factory(config: RunnableConfig):
         mcp_server_url = os.environ.get("MCP_SERVER_URL")
         if mcp_server_url:
             logger.info(f"正在从 {mcp_server_url} 加载 MCP 工具...")
-            mcp_tools = create_mcp_tools(server_url=mcp_server_url, timeout=30)
+            mcp_tools = await create_mcp_tools(server_url=mcp_server_url, timeout=30)
             logger.info(f"成功加载 {len(mcp_tools)} 个 MCP 工具")
     except Exception as e:
         logger.warning(f"加载 MCP 工具失败: {e}")
@@ -107,7 +107,7 @@ To see available MCP tools, check the tool names in your available tools list. E
     )
 
 
-def async_deep_agent_factory(config: RunnableConfig):
+async def async_deep_agent_factory(config: RunnableConfig):
     """
     LangGraph Platform 工厂函数 - 异步版本
 
@@ -139,7 +139,7 @@ def async_deep_agent_factory(config: RunnableConfig):
         mcp_server_url = os.environ.get("MCP_SERVER_URL")
         if mcp_server_url:
             logger.info(f"正在从 {mcp_server_url} 加载 MCP 工具...")
-            mcp_tools = create_mcp_tools_sync(server_url=mcp_server_url, timeout=30)
+            mcp_tools = await create_mcp_tools(server_url=mcp_server_url, timeout=30)
             logger.info(f"成功加载 {len(mcp_tools)} 个 MCP 工具")
     except Exception as e:
         logger.warning(f"加载 MCP 工具失败: {e}")
