@@ -4,8 +4,9 @@ from langchain_core.language_models import LanguageModelLike
 from langgraph.types import Checkpointer
 from langchain.agents import create_agent
 from langchain.agents.middleware import AgentMiddleware, SummarizationMiddleware, HumanInTheLoopMiddleware
-from langchain.agents.middleware.human_in_the_loop import ToolConfig
-from langchain.agents.middleware.prompt_caching import AnthropicPromptCachingMiddleware
+from langchain.agents.middleware.human_in_the_loop import InterruptOnConfig
+# NOTE: AnthropicPromptCachingMiddleware removed in langchain 1.0.0rc2
+# from langchain.agents.middleware.prompt_caching import AnthropicPromptCachingMiddleware
 from deepagents.middleware import PlanningMiddleware, FilesystemMiddleware, SubAgentMiddleware
 from deepagents.prompts import BASE_AGENT_PROMPT
 from deepagents.model import get_default_model
@@ -15,7 +16,7 @@ def agent_builder(
     tools: Sequence[Union[BaseTool, Callable, dict[str, Any]]],
     instructions: str,
     middleware: Optional[list[AgentMiddleware]] = None,
-    tool_configs: Optional[dict[str, bool | ToolConfig]] = None,
+    tool_configs: Optional[dict[str, bool | InterruptOnConfig]] = None,
     model: Optional[Union[str, LanguageModelLike]] = None,
     subagents: Optional[list[SubAgent | CustomSubAgent]] = None,
     context_schema: Optional[Type[Any]] = None,
@@ -39,7 +40,8 @@ def agent_builder(
             max_tokens_before_summary=120000,
             messages_to_keep=20,
         ),
-        AnthropicPromptCachingMiddleware(ttl="5m", unsupported_model_behavior="ignore")
+        # NOTE: AnthropicPromptCachingMiddleware removed in langchain 1.0.0rc2
+        # AnthropicPromptCachingMiddleware(ttl="5m", unsupported_model_behavior="ignore")
     ]
     # Add tool interrupt config if provided
     if tool_configs is not None:
@@ -65,7 +67,7 @@ def create_deep_agent(
     subagents: Optional[list[SubAgent | CustomSubAgent]] = None,
     context_schema: Optional[Type[Any]] = None,
     checkpointer: Optional[Checkpointer] = None,
-    tool_configs: Optional[dict[str, bool | ToolConfig]] = None,
+    tool_configs: Optional[dict[str, bool | InterruptOnConfig]] = None,
 ):
     """Create a deep agent.
     This agent will by default have access to a tool to write todos (write_todos),
@@ -107,7 +109,7 @@ def async_create_deep_agent(
     subagents: Optional[list[SubAgent | CustomSubAgent]] = None,
     context_schema: Optional[Type[Any]] = None,
     checkpointer: Optional[Checkpointer] = None,
-    tool_configs: Optional[dict[str, bool | ToolConfig]] = None,
+    tool_configs: Optional[dict[str, bool | InterruptOnConfig]] = None,
 ):
     """Create a deep agent.
     This agent will by default have access to a tool to write todos (write_todos),

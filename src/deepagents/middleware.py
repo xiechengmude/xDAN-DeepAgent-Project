@@ -2,7 +2,8 @@
 
 from langchain.agents import create_agent
 from langchain.agents.middleware import AgentMiddleware, AgentState, ModelRequest, SummarizationMiddleware
-from langchain.agents.middleware.prompt_caching import AnthropicPromptCachingMiddleware
+# NOTE: AnthropicPromptCachingMiddleware removed in langchain 1.0.0rc2
+# from langchain.agents.middleware.prompt_caching import AnthropicPromptCachingMiddleware
 from langchain_core.tools import BaseTool, tool, InjectedToolCallId
 from langchain_core.messages import ToolMessage
 from langchain.chat_models import init_chat_model
@@ -78,7 +79,8 @@ def _get_agents(
             max_tokens_before_summary=120000,
             messages_to_keep=20,
         ),
-        AnthropicPromptCachingMiddleware(ttl="5m", unsupported_model_behavior="ignore"),
+        # NOTE: AnthropicPromptCachingMiddleware removed in langchain 1.0.0rc2
+        # AnthropicPromptCachingMiddleware(ttl="5m", unsupported_model_behavior="ignore"),
     ]
     agents = {
         "general-purpose": create_agent(
